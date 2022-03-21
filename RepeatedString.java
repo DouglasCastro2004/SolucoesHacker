@@ -1,5 +1,3 @@
-	A VERY BIG SUM
-
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -15,20 +13,35 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'aVeryBigSum' function below.
+     * Complete the 'repeatedString' function below.
      *
      * The function is expected to return a LONG_INTEGER.
-     * The function accepts LONG_INTEGER_ARRAY ar as parameter.
+     * The function accepts following parameters:
+     *  1. STRING s
+     *  2. LONG_INTEGER n
      */
 
-    public static long aVeryBigSum(List<Long> ar) {
+    public static long repeatedString(String s, long n) {
     // Write your code here
     
-    long sum = 0;
-    for(int i= 0; i<ar.size(); i++){
-        sum = sum + ar.get(i);
+    long whole = n / s.length();
+    int remainder = (int) (n % s.length());
+    long found = 0;
+    for(char ch : s.toCharArray()){
+        if(ch == 'a')
+            found++;
     }
-    return sum;
+    long total = found * whole;
+        if(remainder == 0)
+            return total;
+        else{
+            String part = s.substring(0, remainder);
+            for(char ch : part.toCharArray()){
+                if(ch == 'a')
+                    total++;
+            }
+        }
+        return total;
     }
 
 }
@@ -38,13 +51,11 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int arCount = Integer.parseInt(bufferedReader.readLine().trim());
+        String s = bufferedReader.readLine();
 
-        List<Long> ar = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
-            .map(Long::parseLong)
-            .collect(toList());
+        long n = Long.parseLong(bufferedReader.readLine().trim());
 
-        long result = Result.aVeryBigSum(ar);
+        long result = Result.repeatedString(s, n);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();
